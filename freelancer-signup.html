@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Freelancer Login - FreelanceHub</title>
+    <style>
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            line-height: 1.6;
+            color: #333;
+            background-color: #f5f7ff;
+        }
+        
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        /* Container */
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Navigation */
+        header {
+            background-color: #fff;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: #4a6bef;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 30px;
+        }
+        
+        .nav-links a {
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: #4a6bef;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #4a6bef;
+            color: white;
+            border-radius: 5px;
+            font-weight: 500;
+            transition: background-color 0.3s;
+            cursor: pointer;
+            border: none;
+        }
+        
+        .btn:hover {
+            background-color: #3452d9;
+        }
+        
+        /* Login Form */
+        .login-section {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: calc(100vh - 180px);
+            padding: 60px 0;
+        }
+        
+        .login-container {
+            width: 100%;
+            max-width: 450px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+        }
+        
+        .login-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .login-header h1 {
+            color: #222;
+            margin-bottom: 10px;
+        }
+        
+        .login-header p {
+            color: #666;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #444;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        
+        .form-control:focus {
+            border-color: #4a6bef;
+            outline: none;
+        }
+        
+        .form-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .form-footer a {
+            color: #4a6bef;
+            font-weight: 500;
+        }
+        
+        .form-footer a:hover {
+            text-decoration: underline;
+        }
+        
+        .login-btn {
+            width: 100%;
+            padding: 14px;
+            font-size: 16px;
+        }
+        
+        .divider {
+            text-align: center;
+            margin: 20px 0;
+            position: relative;
+        }
+        
+        .divider::before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background-color: #ddd;
+        }
+        
+        .divider span {
+            background-color: white;
+            padding: 0 15px;
+            position: relative;
+            color: #888;
+        }
+        
+        .social-login {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .social-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: #f5f5f5;
+            transition: background-color 0.3s;
+        }
+        
+        .social-btn:hover {
+            background-color: #e5e5e5;
+        }
+        
+        .signup-link {
+            text-align: center;
+            margin-top: 20px;
+            color: #666;
+        }
+        
+        .signup-link a {
+            color: #4a6bef;
+            font-weight: 500;
+        }
+        
+        .signup-link a:hover {
+            text-decoration: underline;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: #2a2d3e;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+        }
+        
+        .copyright {
+            color: #b4b7c5;
+            font-size: 14px;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .login-container {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header with Navigation -->
+    <header>
+        <div class="container">
+            <nav>
+                <a href="index.html" class="logo">FreelanceHub</a>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="find-freelancers.html">Find Freelancers</a></li>
+                    <li><a href="browse-projects.html">Browse Projects</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="freelancer-login.html" class="btn">Log In</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <!-- Login Section -->
+    <center><section class="login-section">
+        <div class="container">
+            <div class="login-container">
+                <div class="login-header">
+                    <h1>Freelancer Login</h1>
+                    <p>Welcome back! Access your freelancer dashboard</p>
+                </div>
+                
+                <form action="#" method="post">
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" class="form-control" placeholder="Enter your email" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" class="form-control" placeholder="Enter your password" required>
+                    </div>
+                    
+                    <div class="form-footer">
+                        <label>
+                            <input type="checkbox"> Remember me
+                        </label>
+                        <a href="forgot-password.html">Forgot Password?</a>
+                    </div>
+                    
+                    <button type="submit" class="btn login-btn">Log In</button>
+                </form>
+                
+                <div class="divider">
+                    <span>Or login with</span>
+                </div>
+                
+                <div class="social-login">
+                    <a href="#" class="social-btn">G</a>
+                    <a href="#" class="social-btn">f</a>
+                    <a href="#" class="social-btn">in</a>
+                </div>
+                
+                <div class="signup-link">
+                    New to FreelanceHub? <a href="freelancer-signup.html">Sign Up as a Freelancer</a>
+                </div>
+            </div>
+        </div>
+    </section></center>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="copyright">
+                &copy; 2025 FreelanceHub. All rights reserved.
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
