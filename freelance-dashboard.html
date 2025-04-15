@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Freelance Client Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #e1e5eb;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #4a6cf7;
+        }
+
+        .dashboard-title {
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #2d3748;
+        }
+
+        .button {
+            background-color: #4a6cf7;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: background-color 0.3s;
+        }
+
+        .button:hover {
+            background-color: #3a57e8;
+        }
+
+        .button-secondary {
+            background-color: #e2e8f0;
+            color: #2d3748;
+        }
+
+        .button-secondary:hover {
+            background-color: #cbd5e0;
+        }
+
+        .button-danger {
+            background-color: #e53e3e;
+        }
+
+        .button-danger:hover {
+            background-color: #c53030;
+        }
+
+        .job-listings {
+            margin-top: 20px;
+        }
+
+        .job-card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e1e5eb;
+        }
+
+        .job-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+
+        .job-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #2d3748;
+        }
+
+        .job-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .job-details {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-bottom: 15px;
+        }
+
+        .job-detail {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: #718096;
+            font-size: 14px;
+        }
+
+        .skills-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .skill-tag {
+            background-color: #e2e8f0;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 13px;
+            color: #4a5568;
+        }
+
+        .modal-backdrop {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            display: none;
+        }
+
+        .modal {
+            background-color: white;
+            border-radius: 8px;
+            padding: 30px;
+            width: 600px;
+            max-width: 90%;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .modal-title {
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .close-button {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #718096;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #4a5568;
+        }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #e1e5eb;
+            border-radius: 6px;
+            font-size: 15px;
+        }
+
+        .skills-input-container {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .skills-input-container input {
+            flex-grow: 1;
+        }
+
+        .form-buttons {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 30px;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px;
+            color: #718096;
+        }
+
+        .status-badge {
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .status-active {
+            background-color: #c6f6d5;
+            color: #2f855a;
+        }
+
+        .status-draft {
+            background-color: #e2e8f0;
+            color: #4a5568;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">FreelanceHub</div>
+            <button id="create-job-button" class="button">
+                <span>+ Create New Job</span>
+            </button>
+        </header>
+
+        <h1 class="dashboard-title">Your Job Listings</h1>
+
+        <div id="job-listings" class="job-listings">
+            <!-- Job listings will be populated here -->
+        </div>
+
+        <div class="empty-state" id="empty-state">
+            <h3>No job listings yet</h3>
+            <p>Create your first job listing to find the perfect freelancer!</p>
+        </div>
+    </div>
+
+    <!-- Create/Edit Job Modal -->
+    <div class="modal-backdrop" id="job-modal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 class="modal-title" id="modal-title">Create New Job</h2>
+                <button class="close-button" id="close-modal">&times;</button>
+            </div>
+            <form id="job-form">
+                <input type="hidden" id="job-id">
+                <div class="form-group">
+                    <label for="job-title">Job Title</label>
+                    <input type="text" id="job-title" placeholder="e.g., Website Redesign" required>
+                </div>
+                <div class="form-group">
+                    <label for="job-description">Description</label>
+                    <textarea id="job-description" rows="4" placeholder="Describe the job requirements..." required></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Skills Required</label>
+                    <div class="skills-input-container">
+                        <input type="text" id="skill-input" placeholder="e.g., JavaScript">
+                        <button type="button" class="button button-secondary" id="add-skill-button">Add</button>
+                    </div>
+                    <div id="skills-list" class="skills-list">
+                        <!-- Skills will be added here -->
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="job-budget">Budget ($)</label>
+                    <input type="number" id="job-budget" placeholder="e.g., 1500" required>
+                </div>
+                <div class="form-group">
+                    <label for="job-deadline">Deadline</label>
+                    <input type="date" id="job-deadline" required>
+                </div>
+                <div class="form-buttons">
+                    <button type="button" class="button button-secondary" id="cancel-button">Cancel</button>
+                    <button type="submit" class="button">Save Job</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Sample data
+        let jobs = [
+            {
+                id: 1,
+                title: "Website Redesign",
+                description: "Looking for an experienced web designer to redesign our company website.",
+                skills: ["HTML", "CSS", "JavaScript", "UI/UX"],
+                budget: 1500,
+                deadline: "2025-05-15",
+                status: "Active"
+            },
+            {
+                id: 2,
+                title: "Mobile App Development",
+                description: "Need a developer to create a mobile app for both iOS and Android.",
+                skills: ["React Native", "Firebase", "API Integration"],
+                budget: 3000,
+                deadline: "2025-06-30",
+                status: "Active"
+            }
+        ];
+        
+        // DOM Elements
+        const jobListings = document.getElementById('job-listings');
+        const emptyState = document.getElementById('empty-state');
+        const jobModal = document.getElementById('job-modal');
+        const jobForm = document.getElementById('job-form');
+        const modalTitle = document.getElementById('modal-title');
+        const jobIdInput = document.getElementById('job-id');
+        const jobTitleInput = document.getElementById('job-title');
+        const jobDescriptionInput = document.getElementById('job-description');
+        const jobBudgetInput = document.getElementById('job-budget');
+        const jobDeadlineInput = document.getElementById('job-deadline');
+        const skillInput = document.getElementById('skill-input');
+        const skillsList = document.getElementById('skills-list');
+        const addSkillButton = document.getElementById('add-skill-button');
+        const createJobButton = document.getElementById('create-job-button');
+        const closeModalButton = document.getElementById('close-modal');
+        const cancelButton = document.getElementById('cancel-button');
+        
+        // Current skills for the form
+        let currentSkills = [];
+        
+        // Initialize the dashboard
+        function init() {
+            renderJobs();
+            setupEventListeners();
+        }
+        
+        // Render all jobs
+        function renderJobs() {
+            jobListings.innerHTML = '';
+            
+            if (jobs.length === 0) {
+                emptyState.classList.remove('hidden');
+                return;
+            }
+            
+            emptyState.classList.add('hidden');
+            
+            jobs.forEach(job => {
+                const jobCard = createJobCard(job);
+                jobListings.appendChild(jobCard);
+            });
+        }
+        
+        // Create a job card element
+        function createJobCard(job) {
+            const card = document.createElement('div');
+            card.className = 'job-card';
+            
+            const statusClass = job.status === 'Active' ? 'status-active' : 'status-draft';
+            
+            card.innerHTML = `
+                <div class="job-header">
+                    <h3 class="job-title">${job.title}</h3>
+                    <div class="job-actions">
+                        <button class="button button-secondary edit-job" data-id="${job.id}">Edit</button>
+                        <button class="button button-danger delete-job" data-id="${job.id}">Delete</button>
+                    </div>
+                </div>
+                <div class="job-details">
+                    <div class="job-detail">
+                        <span>Budget:</span> $${job.budget}
+                    </div>
+                    <div class="job-detail">
+                        <span>Deadline:</span> ${formatDate(job.deadline)}
+                    </div>
+                    <div class="job-detail">
+                        <span class="status-badge ${statusClass}">${job.status}</span>
+                    </div>
+                </div>
+                <p>${job.description}</p>
+                <div class="skills-list">
+                    ${job.skills.map(skill => `<span class="skill-tag">${skill}</span>`).join('')}
+                </div>
+            `;
+            
+            // Add event listeners to the buttons
+            card.querySelector('.edit-job').addEventListener('click', () => editJob(job.id));
+            card.querySelector('.delete-job').addEventListener('click', () => deleteJob(job.id));
+            
+            return card;
+        }
+        
+        // Format date to be more readable
+        function formatDate(dateString) {
+            const options = { year: 'numeric', month: 'short', day: 'numeric' };
+            return new Date(dateString).toLocaleDateString(undefined, options);
+        }
+        
+        // Setup event listeners
+        function setupEventListeners() {
+            createJobButton.addEventListener('click', openCreateJobModal);
+            closeModalButton.addEventListener('click', closeModal);
+            cancelButton.addEventListener('click', closeModal);
+            addSkillButton.addEventListener('click', addSkill);
+            jobForm.addEventListener('submit', saveJob);
+            
+            // Enter key adds a skill
+            skillInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    addSkill();
+                }
+            });
+        }
+        
+        // Open modal for creating a new job
+        function openCreateJobModal() {
+            resetForm();
+            modalTitle.textContent = 'Create New Job';
+            jobModal.style.display = 'flex';
+        }
+        
+        // Open modal for editing a job
+        function editJob(jobId) {
+            const job = jobs.find(j => j.id === jobId);
+            if (!job) return;
+            
+            resetForm();
+            
+            modalTitle.textContent = 'Edit Job';
+            jobIdInput.value = job.id;
+            jobTitleInput.value = job.title;
+            jobDescriptionInput.value = job.description;
+            jobBudgetInput.value = job.budget;
+            jobDeadlineInput.value = job.deadline;
+            
+            currentSkills = [...job.skills];
+            renderSkillTags();
+            
+            jobModal.style.display = 'flex';
+        }
+        
+        // Delete a job
+        function deleteJob(jobId) {
+            if (confirm('Are you sure you want to delete this job?')) {
+                jobs = jobs.filter(job => job.id !== jobId);
+                renderJobs();
+            }
+        }
+        
+        // Close the modal
+        function closeModal() {
+            jobModal.style.display = 'none';
+        }
+        
+        // Reset the form
+        function resetForm() {
+            jobForm.reset();
+            jobIdInput.value = '';
+            currentSkills = [];
+            renderSkillTags();
+        }
+        
+        // Add a skill to the list
+        function addSkill() {
+            const skill = skillInput.value.trim();
+            if (skill && !currentSkills.includes(skill)) {
+                currentSkills.push(skill);
+                skillInput.value = '';
+                renderSkillTags();
+            }
+        }
+        
+        // Render skill tags
+        function renderSkillTags() {
+            skillsList.innerHTML = '';
+            
+            currentSkills.forEach(skill => {
+                const tag = document.createElement('div');
+                tag.className = 'skill-tag';
+                tag.innerHTML = `
+                    ${skill}
+                    <span class="remove-skill" data-skill="${skill}">&times;</span>
+                `;
+                skillsList.appendChild(tag);
+                
+                tag.querySelector('.remove-skill').addEventListener('click', () => removeSkill(skill));
+            });
+        }
+        
+        // Remove a skill from the list
+        function removeSkill(skill) {
+            currentSkills = currentSkills.filter(s => s !== skill);
+            renderSkillTags();
+        }
+        
+        // Save the job
+        function saveJob(e) {
+            e.preventDefault();
+            
+            const jobData = {
+                title: jobTitleInput.value,
+                description: jobDescriptionInput.value,
+                skills: currentSkills,
+                budget: Number(jobBudgetInput.value),
+                deadline: jobDeadlineInput.value,
+                status: 'Active'
+            };
+            
+            if (jobIdInput.value) {
+                // Edit existing job
+                const jobId = Number(jobIdInput.value);
+                const index = jobs.findIndex(job => job.id === jobId);
+                if (index !== -1) {
+                    jobs[index] = { ...jobs[index], ...jobData };
+                }
+            } else {
+                // Create new job
+                const newJobId = jobs.length > 0 ? Math.max(...jobs.map(job => job.id)) + 1 : 1;
+                jobs.push({ id: newJobId, ...jobData });
+            }
+            
+            renderJobs();
+            closeModal();
+        }
+        
+        // Initialize the dashboard
+        init();
+    </script>
+</body>
+</html>
