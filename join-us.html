@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Join Our Freelancing Platform</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        header {
+            background-color: #fff;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 15px 0;
+        }
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #2563eb;
+        }
+        .hero {
+            text-align: center;
+            padding: 80px 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
+            margin-top: 40px;
+        }
+        h1 {
+            font-size: 36px;
+            margin-bottom: 20px;
+            color: #1e3a8a;
+        }
+        p {
+            font-size: 18px;
+            color: #64748b;
+            margin-bottom: 40px;
+        }
+        .choice-container {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 40px;
+            flex-wrap: wrap;
+        }
+        .choice-card {
+            background-color: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            padding: 30px;
+            width: 300px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .choice-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+        }
+        .choice-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+            color: #2563eb;
+        }
+        .choice-title {
+            font-size: 22px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #1e3a8a;
+        }
+        .choice-description {
+            font-size: 16px;
+            color: #64748b;
+            margin-bottom: 25px;
+        }
+        .btn {
+            display: inline-block;
+            padding: 12px 28px;
+            background-color: #2563eb;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 600;
+            transition: background-color 0.2s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .btn:hover {
+            background-color: #1d4ed8;
+        }
+        .btn-outline {
+            background-color: transparent;
+            border: 2px solid #2563eb;
+            color: #2563eb;
+        }
+        .btn-outline:hover {
+            background-color: #2563eb;
+            color: white;
+        }
+        footer {
+            text-align: center;
+            margin-top: 60px;
+            padding: 20px;
+            color: #64748b;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">FreelanceHub</div>
+        </div>
+    </header>
+    
+    <div class="container">
+        <div class="hero">
+            <h1>Join Our Freelancing Platform</h1>
+            <p>Connect with top talent or find your next opportunity. Choose how you want to participate.</p>
+            
+            <div class="choice-container">
+                <div class="choice-card">
+                    <div class="choice-icon">👩‍💻</div>
+                    <div class="choice-title">I'm a Freelancer</div>
+                    <div class="choice-description">Find projects, showcase your portfolio, and connect with clients looking for your skills.</div>
+                    <a href="freelancer-login.html" class="btn">Join as Freelancer</a>
+                </div>
+                
+                <div class="choice-card">
+                    <div class="choice-icon">🏢</div>
+                    <div class="choice-title">I'm a Company/Client</div>
+                    <div class="choice-description">Post projects, find talented professionals, and get your work done efficiently.</div>
+                    <a href="client-signup.html" class="btn btn-outline">Join as Client</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <div class="container">
+            &copy; 2025 FreelanceHub. All rights reserved.
+        </div>
+    </footer>
+
+    <script>
+        // You can add any additional JavaScript functionality here
+        // For example, tracking which option was selected
+        document.querySelectorAll('.btn').forEach(button => {
+            button.addEventListener('click', function(e) {
+                const userType = this.getAttribute('href').includes('freelancer') ? 'freelancer' : 'client';
+                console.log(`User selected: ${userType}`);
+                // You could also store this in localStorage if needed
+                localStorage.setItem('userType', userType);
+                // The link will naturally navigate to login.html with the appropriate query parameter
+            });
+        });
+    </script>
+</body>
+</html>

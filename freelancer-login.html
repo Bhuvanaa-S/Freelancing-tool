@@ -3,8 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Client Login - FreelanceHub</title>
+    <title>Freelancer Login - FreelanceHub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        :root {
+            --primary: #4a6bef;
+            --primary-light: #738df5;
+            --primary-dark: #3452d9;
+            --secondary: #f5f7ff;
+            --text: #333;
+            --text-light: #666;
+            --text-lighter: #888;
+            --white: #fff;
+            --border: #ddd;
+            --error: #e74c3c;
+            --success: #2ecc71;
+        }
+
         /* Reset and Base Styles */
         * {
             margin: 0;
@@ -15,8 +30,8 @@
         
         body {
             line-height: 1.6;
-            color: #333;
-            background-color: #f5f7ff;
+            color: var(--text);
+            background-color: var(--secondary);
         }
         
         a {
@@ -34,7 +49,7 @@
         
         /* Navigation */
         header {
-            background-color: #fff;
+            background-color: var(--white);
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
             position: sticky;
             top: 0;
@@ -51,7 +66,7 @@
         .logo {
             font-size: 24px;
             font-weight: 700;
-            color: #4a6bef;
+            color: var(--primary);
         }
         
         .nav-links {
@@ -69,23 +84,25 @@
         }
         
         .nav-links a:hover {
-            color: #4a6bef;
+            color: var(--primary);
         }
         
         .btn {
             display: inline-block;
             padding: 10px 20px;
-            background-color: #4a6bef;
-            color: white;
+            background-color: var(--primary);
+            color: var(--white);
             border-radius: 5px;
             font-weight: 500;
-            transition: background-color 0.3s;
+            transition: all 0.3s;
             cursor: pointer;
             border: none;
         }
         
         .btn:hover {
-            background-color: #3452d9;
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
         
         /* Login Form */
@@ -100,10 +117,16 @@
         .login-container {
             width: 100%;
             max-width: 450px;
-            background-color: white;
+            background-color: var(--white);
             border-radius: 10px;
             box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
             padding: 40px;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
         
         .login-header {
@@ -117,11 +140,12 @@
         }
         
         .login-header p {
-            color: #666;
+            color: var(--text-light);
         }
         
         .form-group {
             margin-bottom: 20px;
+            position: relative;
         }
         
         .form-group label {
@@ -134,15 +158,24 @@
         .form-control {
             width: 100%;
             padding: 12px 15px;
-            border: 1px solid #ddd;
+            border: 1px solid var(--border);
             border-radius: 5px;
             font-size: 16px;
-            transition: border-color 0.3s;
+            transition: all 0.3s;
         }
         
         .form-control:focus {
-            border-color: #4a6bef;
+            border-color: var(--primary);
             outline: none;
+            box-shadow: 0 0 0 3px rgba(74, 107, 239, 0.2);
+        }
+        
+        .password-toggle {
+            position: absolute;
+            right: 15px;
+            top: 40px;
+            cursor: pointer;
+            color: var(--text-lighter);
         }
         
         .form-footer {
@@ -153,7 +186,7 @@
         }
         
         .form-footer a {
-            color: #4a6bef;
+            color: var(--primary);
             font-weight: 500;
         }
         
@@ -165,6 +198,7 @@
             width: 100%;
             padding: 14px;
             font-size: 16px;
+            margin-top: 10px;
         }
         
         .divider {
@@ -180,14 +214,14 @@
             left: 0;
             right: 0;
             height: 1px;
-            background-color: #ddd;
+            background-color: var(--border);
         }
         
         .divider span {
-            background-color: white;
+            background-color: var(--white);
             padding: 0 15px;
             position: relative;
-            color: #888;
+            color: var(--text-lighter);
         }
         
         .social-login {
@@ -205,21 +239,28 @@
             height: 50px;
             border-radius: 50%;
             background-color: #f5f5f5;
-            transition: background-color 0.3s;
+            transition: all 0.3s;
+            color: #555;
+            font-size: 18px;
         }
         
         .social-btn:hover {
             background-color: #e5e5e5;
+            transform: translateY(-3px);
         }
+        
+        .google-btn { color: #DB4437; }
+        .fb-btn { color: #4267B2; }
+        .linkedin-btn { color: #0077B5; }
         
         .signup-link {
             text-align: center;
             margin-top: 20px;
-            color: #666;
+            color: var(--text-light);
         }
         
         .signup-link a {
-            color: #4a6bef;
+            color: var(--primary);
             font-weight: 500;
         }
         
@@ -227,10 +268,18 @@
             text-decoration: underline;
         }
         
+        /* Error message */
+        .error-message {
+            color: var(--error);
+            font-size: 14px;
+            margin-top: 5px;
+            display: none;
+        }
+        
         /* Footer */
         footer {
             background-color: #2a2d3e;
-            color: white;
+            color: var(--white);
             padding: 20px 0;
             text-align: center;
         }
@@ -274,24 +323,27 @@
         <div class="container">
             <div class="login-container">
                 <div class="login-header">
-                    <h1>Client Login</h1>
-                    <p>Welcome back! Please login to your account</p>
+                    <h1>Freelancer Login</h1>
+                    <p>Welcome back! Access your freelancer dashboard</p>
                 </div>
                 
-                <form action="#" method="post">
+                <form id="loginForm" action="freelance-dashboard.html" method="post">
                     <div class="form-group">
                         <label for="email">Email Address</label>
-                        <input type="email" id="email" class="form-control" placeholder="Enter your email" required>
+                        <input type="email" id="email" name="email" class="form-control" placeholder="Enter your email" required>
+                        <div id="email-error" class="error-message">Please enter a valid email address</div>
                     </div>
                     
                     <div class="form-group">
                         <label for="password">Password</label>
-                        <input type="password" id="password" class="form-control" placeholder="Enter your password" required>
+                        <input type="password" id="password" name="password" class="form-control" placeholder="Enter your password" required>
+                        <i class="fas fa-eye password-toggle" id="togglePassword"></i>
+                        <div id="password-error" class="error-message">Password must be at least 8 characters</div>
                     </div>
                     
                     <div class="form-footer">
                         <label>
-                            <input type="checkbox"> Remember me
+                            <input type="checkbox" name="remember"> Remember me
                         </label>
                         <a href="forgot-password.html">Forgot Password?</a>
                     </div>
@@ -304,13 +356,19 @@
                 </div>
                 
                 <div class="social-login">
-                    <a href="#" class="social-btn">G</a>
-                    <a href="#" class="social-btn">f</a>
-                    <a href="#" class="social-btn">in</a>
+                    <a href="#" class="social-btn google-btn" title="Login with Google">
+                        <i class="fab fa-google"></i>
+                    </a>
+                    <a href="#" class="social-btn fb-btn" title="Login with Facebook">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="#" class="social-btn linkedin-btn" title="Login with LinkedIn">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
                 </div>
                 
                 <div class="signup-link">
-                    Don't have an account? <a href="client-signup.html">Sign Up</a>
+                    New to FreelanceHub? <a href="freelancer-signup.html">Sign Up as a Freelancer</a>
                 </div>
             </div>
         </div>
@@ -324,5 +382,72 @@
             </div>
         </div>
     </footer>
+
+    <script>
+        // Password toggle visibility
+        const togglePassword = document.getElementById('togglePassword');
+        const password = document.getElementById('password');
+        
+        togglePassword.addEventListener('click', function() {
+            const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+            password.setAttribute('type', type);
+            this.classList.toggle('fa-eye-slash');
+        });
+        
+        // Form validation
+        const loginForm = document.getElementById('loginForm');
+        const emailInput = document.getElementById('email');
+        const passwordInput = document.getElementById('password');
+        const emailError = document.getElementById('email-error');
+        const passwordError = document.getElementById('password-error');
+        
+        loginForm.addEventListener('submit', function(e) {
+            let isValid = true;
+            
+            // Email validation
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailInput.value)) {
+                emailError.style.display = 'block';
+                emailInput.style.borderColor = 'var(--error)';
+                isValid = false;
+            } else {
+                emailError.style.display = 'none';
+                emailInput.style.borderColor = 'var(--border)';
+            }
+            
+            // Password validation
+            if (passwordInput.value.length < 8) {
+                passwordError.style.display = 'block';
+                passwordInput.style.borderColor = 'var(--error)';
+                isValid = false;
+            } else {
+                passwordError.style.display = 'none';
+                passwordInput.style.borderColor = 'var(--border)';
+            }
+            
+            if (!isValid) {
+                e.preventDefault();
+            }
+            
+            // In a real application, you would send the data to a server here
+            // and only redirect if authentication is successful
+        });
+        
+        // Add animation when elements come into view
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = 1;
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, { threshold: 0.1 });
+        
+        document.querySelectorAll('.login-container, .social-btn').forEach(el => {
+            el.style.opacity = 0;
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'all 0.5s ease-out';
+            observer.observe(el);
+        });
+    </script>
 </body>
 </html>
