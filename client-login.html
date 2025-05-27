@@ -251,6 +251,41 @@
             }
         }
     </style>
+    <!-- Firebase App (the core Firebase SDK) -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-app.js";
+import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-analytics.js";
+import { getAuth, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-auth.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAy6rIOqHJac428zxQh0EB7CwKzeDxsIg4",
+  authDomain: "freelancehub-a830e.firebaseapp.com",
+  projectId: "freelancehub-a830e",
+  storageBucket: "freelancehub-a830e.appspot.com",
+  messagingSenderId: "345558183516",
+  appId: "1:345558183516:web:4ed982ccd6ee9bc7c20099",
+  measurementId: "G-TRT5RD5B86"
+};
+
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
+
+const auth = getAuth(app);
+const provider = new GoogleAuthProvider();
+
+window.googleLogin = async function () {
+  try {
+    const result = await signInWithPopup(auth, provider);
+    const user = result.user;
+    alert("Welcome, " + user.displayName);
+    window.location.href = "client-dashboard.html"; // <-- Added redirect to dashboard
+  } catch (error) {
+    console.error("Google Login Error:", error);
+    alert("Login failed. Check console for error details.");
+  }
+};
+</script>
+
 </head>
 <body>
     <!-- Header with Navigation -->
@@ -304,9 +339,7 @@
                 </div>
                 
                 <div class="social-login">
-                    <a href="#" class="social-btn">G</a>
-                    <a href="#" class="social-btn">f</a>
-                    <a href="#" class="social-btn">in</a>
+                 <a href="javascript:void(0);" class="social-btn" onclick="googleLogin()">G</a>
                 </div>
                 
                 <div class="signup-link">
